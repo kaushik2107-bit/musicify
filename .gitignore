@@ -38,3 +38,4 @@ next-env.d.ts
 
 # pages
 /pages/upload.tsx
+/pages/upload_album.tsx
