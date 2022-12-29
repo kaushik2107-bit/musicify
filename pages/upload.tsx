@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { app } from "./firebase";
+import { app } from "../lib/firebase";
 import { v4 } from "uuid";
 import Image from "next/image";
 import { MeiliSearch } from "meilisearch";

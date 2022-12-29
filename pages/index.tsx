@@ -12,7 +12,7 @@ import SearchResult from "../components/index/MiddleComponent/SearchResult";
 import AudioPlayer from "../components/index/RightComponent/AudioPlayer";
 import { useState } from "react";
 import Loading from "./loading";
-import { auth } from "./firebase";
+import { auth } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import Song from "../components/index/MiddleComponent/song";

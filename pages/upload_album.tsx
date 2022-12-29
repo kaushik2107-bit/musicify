@@ -19,7 +19,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { app } from "./firebase";
+import { app } from "../lib/firebase";
 import Image from "next/image";
 import { v4 } from "uuid";
 import { MeiliSearch } from "meilisearch";

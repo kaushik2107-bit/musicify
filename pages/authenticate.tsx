@@ -2,7 +2,7 @@ import Logo from "../components/index/LeftComponent/Logo";
 import GoogleButton from "react-google-button";
 import { Saira } from "@next/font/google";
 const saira = Saira({ subsets: ["latin"] });
-import { auth } from "./firebase";
+import { auth } from "../lib/firebase";
 import {
   signInWithRedirect,
   signInWithPopup,

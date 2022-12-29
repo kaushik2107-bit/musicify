@@ -1,4 +1,4 @@
-import { auth, app } from "../../../pages/firebase";
+import { auth, app } from "../../../lib/firebase";
 import {
   getFirestore,
   collection,

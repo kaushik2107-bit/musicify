@@ -11,7 +11,7 @@ import { Saira } from "@next/font/google";
 const saira = Saira({ subsets: ["latin"] });
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { auth, app } from "../../../pages/firebase";
+import { auth, app } from "../../../lib/firebase";
 import {
   getFirestore,
   collection,

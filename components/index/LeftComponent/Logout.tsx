@@ -1,6 +1,6 @@
 import { HiLogout } from "react-icons/hi";
 import { Saira } from "@next/font/google";
-import { auth } from "../../../pages/firebase";
+import { auth } from "../../../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";

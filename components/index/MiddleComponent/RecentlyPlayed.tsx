@@ -1,7 +1,7 @@
 import { Saira } from "@next/font/google";
 import Image from "next/image";
 const saira = Saira({ subsets: ["latin"] });
-import { auth, app } from "../../../pages/firebase";
+import { auth, app } from "../../../lib/firebase";
 import {
   getFirestore,
   collection,

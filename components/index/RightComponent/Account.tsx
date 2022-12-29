@@ -1,5 +1,5 @@
 import { Saira } from "@next/font/google";
-import { auth } from "../../../pages/firebase";
+import { auth } from "../../../lib/firebase";
 
 const saira = Saira({ subsets: ["latin"] });
 

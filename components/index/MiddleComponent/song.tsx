@@ -4,7 +4,7 @@ import NextImage from "next/image";
 import { Saira } from "@next/font/google";
 const saira = Saira({ subsets: ["latin"] });
 import { BsHeartFill, BsHeart, BsPlayFill, BsPauseFill } from "react-icons/bs";
-import { auth, app } from "../../../pages/firebase";
+import { auth, app } from "../../../lib/firebase";
 import {
   getFirestore,
   collection,
