@@ -37,8 +37,10 @@ export default function RecentlyPlayed({ setSongId }) {
   const fetchRecentlyPlayed = async () => {
     const docRef = doc(colRef, user.uid);
     const snap = await getDoc(docRef);
-    const obj = snap.data().favorites;
-    setTiles((prev) => obj);
+    const obj = snap.data().recentlyPlayed;
+    let keys = Object.keys(obj);
+    keys.sort((a, b) => new Date(obj[b]) - new Date(obj[a]));
+    setTiles((prev) => keys);
   };
 
   const fetchSongsData = async () => {
@@ -68,10 +70,10 @@ export default function RecentlyPlayed({ setSongId }) {
 
   return (
     <div className={saira.className}>
-      <h4 className="mx-8 m-4 text-[20px] text-[#aaa] font-medium uppercase">
+      <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
         Recently Played
       </h4>
-      <div className="mx-8 m-4 flex flex-wrap gap-2 h-[230px] overflow-hidden">
+      <div className="flex flex-wrap gap-2 h-[230px] overflow-hidden">
         {songs.map((item, index) => (
           <div
             key={index}

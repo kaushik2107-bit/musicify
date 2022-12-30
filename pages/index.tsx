@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import Song from "../components/index/MiddleComponent/song";
 import Recents from "../components/index/MiddleComponent/Recents";
 import Favorites from "../components/index/MiddleComponent/Favorites";
+import Trendings from "../components/index/MiddleComponent/Trendings";
 
 export default function Home() {
   const router = useRouter();
@@ -51,9 +52,11 @@ function HomeComponent() {
         {/* Left Section of the page */}
         <div className="h-full w-[250px] bg-[#1d242c] flex flex-col">
           <Logo active={active} setActive={setActive} />
-          <Menu active={active} setActive={setActive} />
-          <Library active={active} setActive={setActive} />
-          <Customize active={active} setActive={setActive} />
+          <div className="overflow-scroll scrollbar-hidden">
+            <Menu active={active} setActive={setActive} />
+            <Library active={active} setActive={setActive} />
+            <Customize active={active} setActive={setActive} />
+          </div>
           <Logout />
         </div>
 
@@ -62,14 +65,33 @@ function HomeComponent() {
           {!songId ? (
             {
               1: (
-                <>
-                  <div className="h-[290px]">
-                    <TrendingMusic />
+                <div className="flex flex-col h-screen overflow-scroll">
+                  <div className="h-screen mx-8">
+                    <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
+                      Trending Music
+                    </h4>
+                    <TrendingMusic
+                      setSongId={setSongId}
+                      songId={songId}
+                      setQueue={setQueue}
+                      setIndex={setIndex}
+                      currentSongId={currentSongId}
+                      setCurrentSongId={setCurrentSongId}
+                      isPlaying={isPlaying}
+                      setIsPlaying={setIsPlaying}
+                    />
+                    <div className="flex flex-col mt-[250px]">
+                      <div className="h-[290px]">
+                        <RecentlyPlayed setSongId={setSongId} />
+                      </div>
+                    </div>
                   </div>
-                  <div className="h-[290px]">
-                    <RecentlyPlayed setSongId={setSongId} />
-                  </div>
-                </>
+                </div>
+              ),
+              2: (
+                <div className="flex flex-col h-screen">
+                  <Trendings setSongId={setSongId} />
+                </div>
               ),
               4: (
                 <div className="flex flex-col h-screen">

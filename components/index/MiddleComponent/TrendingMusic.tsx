@@ -3,33 +3,62 @@ import Slider from "react-slick";
 import Card from "./Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useState, useEffect } from "react";
+import { auth, app } from "../../../lib/firebase";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  addDoc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  doc,
+  query,
+  where,
+  getDocs,
+  increment,
+  orderBy,
+  limit,
+} from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const saira = Saira({ subsets: ["latin"] });
 
-const cardsData = [
-  {
-    name: "Drivers License",
-    artist: "Olivia Rodrigo",
-    image: "/cardsImages/drivers_license.webp",
-  },
-  {
-    name: "Snowman",
-    artist: "Sia",
-    image: "/cardsImages/snowman.webp",
-  },
-  {
-    name: "Until I found you",
-    artist: "Stephen Sanchez",
-    image: "/cardsImages/until_I_found_you.jpeg",
-  },
-  {
-    name: "Moral of the story",
-    artist: "Ashe",
-    image: "/cardsImages/moral_of_the_story.jpeg",
-  },
-];
+export default function TrendingMusic({
+  songId,
+  setSongId,
+  setQueue,
+  setIndex,
+  currentSongId,
+  setCurrentSongId,
+  isPlaying,
+  setIsPlaying,
+}) {
+  const [user, loading, error] = useAuthState(auth);
+  const [cardsData, setCardsData] = useState([]);
+  const db = getFirestore();
+  const colRef = collection(db, "userInfo");
+  const songRef = collection(db, "songs");
+  const albumRef = collection(db, "album");
 
-export default function TrendingMusic() {
+  const fetchTrending = async () => {
+    const q = query(songRef, orderBy("streams", "desc"), limit(5));
+    const data = await getDocs(q);
+    let ans = [];
+    data.forEach((element) => {
+      ans.push({ id: element.id, ...element.data() });
+    });
+    setCardsData((prev) => [...ans]);
+  };
+
+  useEffect(() => {
+    fetchTrending();
+  }, []);
+
   const settings = {
     dots: false,
     autoplay: true,
@@ -44,25 +73,25 @@ export default function TrendingMusic() {
   };
 
   return (
-    <div className={saira.className}>
-      <h4 className="mx-8 m-4 text-[20px] text-[#aaa] font-medium uppercase">
-        Trending Music
-      </h4>
-      <div className="mx-8 m-4 relative">
-        <Slider {...settings} className="absolute w-full">
-          {cardsData
-            .map((item, index) => (
-              <Card
-                key={index}
-                name={item.name}
-                artist={item.artist}
-                image={item.image}
-                index={index}
-              />
-            ))
-            .reverse()}
-        </Slider>
-      </div>
+    <div className={saira.className} style={{ position: "relative" }}>
+      <Slider {...settings} className="absolute w-full">
+        {cardsData
+          .map((item, index) => (
+            <Card
+              key={index}
+              data={item}
+              setSongId={setSongId}
+              songId={songId}
+              setQueue={setQueue}
+              setIndex={setIndex}
+              currentSongId={currentSongId}
+              setCurrentSongId={setCurrentSongId}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+            />
+          ))
+          .reverse()}
+      </Slider>
     </div>
   );
 }
