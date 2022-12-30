@@ -30,6 +30,7 @@ import {
   increment,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { motion } from "framer-motion";
 
 export default function AudioPLayer({
   isPlaying,
@@ -208,7 +209,13 @@ export default function AudioPLayer({
   return (
     <>
       {queue.length !== 0 ? (
-        <div className={saira.className} style={{ margin: "14px" }}>
+        <motion.div
+          className={saira.className}
+          style={{ margin: "14px" }}
+          initial={{ opacity: 0, scale: 0.5, y: 100 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <audio
             src={queue[currentIndex].songURL}
             preload="metadata"
@@ -310,7 +317,7 @@ export default function AudioPLayer({
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       ) : (
         <></>
       )}

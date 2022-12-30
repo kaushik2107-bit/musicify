@@ -19,6 +19,7 @@ import Song from "../components/index/MiddleComponent/song";
 import Recents from "../components/index/MiddleComponent/Recents";
 import Favorites from "../components/index/MiddleComponent/Favorites";
 import Trendings from "../components/index/MiddleComponent/Trendings";
+import Plan from "../components/index/RightComponent/Plan";
 
 export default function Home() {
   const router = useRouter();
@@ -129,6 +130,7 @@ function HomeComponent() {
         {/* Right Section of the page */}
         <div className="h-full w-[350px] bg-[#1d242c] flex flex-col">
           <Account />
+          <Plan />
           <AudioPlayer
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
