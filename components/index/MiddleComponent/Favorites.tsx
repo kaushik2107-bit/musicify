@@ -23,11 +23,14 @@ import { useState, useEffect } from "react";
 import { Saira } from "@next/font/google";
 const saira = Saira({ subsets: ["latin"] });
 import Image from "next/image";
+import TileSkeleton from "../../Skeletons/TileSkeleton";
+import TrendingText from "../../Skeletons/TrendingText";
 
 export default function Recents({ setSongId }) {
   const [user, loading, error] = useAuthState(auth);
   const [tiles, setTiles] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const db = getFirestore();
   const colRef = collection(db, "userInfo");
@@ -35,6 +38,7 @@ export default function Recents({ setSongId }) {
   const albumRef = collection(db, "album");
 
   const fetchRecentlyPlayed = async () => {
+    setIsLoading(true);
     const docRef = doc(colRef, user.uid);
     const snap = await getDoc(docRef);
     const obj = snap.data().favorites;
@@ -55,6 +59,7 @@ export default function Recents({ setSongId }) {
         ans.push({ id: element.id, ...element.data() });
       });
       setSongs(ans);
+      setIsLoading(false);
     }
   };
 
@@ -69,33 +74,37 @@ export default function Recents({ setSongId }) {
   return (
     <div className={saira.className} style={{ overflow: "scroll" }}>
       <p className="text-[18px] uppercase font-medium text-[#eee] p-4">
-        Liked Songs
+        {!isLoading ? "Liked Songs" : <TrendingText />}
       </p>
       <div className="flex flex-wrap gap-2 p-4 items-center">
-        {songs.map((item, index) => (
-          <div
-            key={index}
-            className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
-            onClick={() => setSongId((prev) => item)}
-          >
-            <Image
-              loader={() => item.imageURL}
-              src={item.imageURL}
-              width={120}
-              height={120}
-              alt={"image"}
-            />
-            <div className="text-[#ddd]">
-              <p className="text-[20px]">{item.songName || item.albumName}</p>
-              <div className="flex gap-2 items-center">
-                <p className="text-[14px] text-[#aaa]">{item.artistName}</p>
-                <p className="text-[12px] text-[#888]">
-                  {item.songsArray?.length ? "Album" : "Song"}
-                </p>
+        {!isLoading ? (
+          songs.map((item, index) => (
+            <div
+              key={index}
+              className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
+              onClick={() => setSongId((prev) => item)}
+            >
+              <Image
+                loader={() => item.imageURL}
+                src={item.imageURL}
+                width={120}
+                height={120}
+                alt={"image"}
+              />
+              <div className="text-[#ddd]">
+                <p className="text-[20px]">{item.songName || item.albumName}</p>
+                <div className="flex gap-2 items-center">
+                  <p className="text-[14px] text-[#aaa]">{item.artistName}</p>
+                  <p className="text-[12px] text-[#888]">
+                    {item.songsArray?.length ? "Album" : "Song"}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <TileSkeleton />
+        )}
       </div>
     </div>
   );

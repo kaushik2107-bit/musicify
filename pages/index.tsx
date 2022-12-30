@@ -68,9 +68,6 @@ function HomeComponent() {
               1: (
                 <div className="flex flex-col h-screen overflow-scroll">
                   <div className="h-screen mx-8">
-                    <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
-                      Trending Music
-                    </h4>
                     <TrendingMusic
                       setSongId={setSongId}
                       songId={songId}

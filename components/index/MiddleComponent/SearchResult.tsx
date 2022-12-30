@@ -25,12 +25,14 @@ import { useRouter } from "next/router";
 import { Saira } from "@next/font/google";
 const saira = Saira({ subsets: ["latin"] });
 import { MdOutlineCancel } from "react-icons/md";
+import SearchSkeleton from "../../Skeletons/SearchSkeleton";
 
 export default function SearchResult({ search, setSongId }) {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
   const [results, setResults] = useState([]);
   const [history, setHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const db = getFirestore();
   const colRef = collection(db, "userInfo");
@@ -38,12 +40,14 @@ export default function SearchResult({ search, setSongId }) {
   const albumRef = collection(db, "album");
 
   const fetchSongs = async () => {
+    setIsLoading(true);
     const client = new MeiliSearch({
       host: process.env.NEXT_PUBLIC_SEARCH_HOST,
       apiKey: process.env.NEXT_PUBLIC_SEARCH_APIKEY,
     });
     const result = await client.index("songs").search(search);
     setResults(result.hits);
+    setIsLoading(false);
   };
 
   const storeHistory = async (item) => {
@@ -64,6 +68,7 @@ export default function SearchResult({ search, setSongId }) {
   };
 
   const fetchHistory = async () => {
+    setIsLoading(true);
     const docRef = doc(colRef, user.uid);
     const snap = await getDoc(docRef);
     let data = snap.data().searchHistory;
@@ -77,6 +82,7 @@ export default function SearchResult({ search, setSongId }) {
 
       setHistory(ans);
     }
+    setIsLoading(false);
   };
 
   const deleteHistory = async (e, item, index) => {
@@ -141,7 +147,7 @@ export default function SearchResult({ search, setSongId }) {
         )
       )}
       <div className="flex-[1_1_0] p-4 overflow-scroll flex flex-col gap-2">
-        {search.length ? (
+        {!isLoading && search.length ? (
           results.map((item, index) => (
             <div
               key={index}
@@ -168,7 +174,7 @@ export default function SearchResult({ search, setSongId }) {
               </div>
             </div>
           ))
-        ) : history.length ? (
+        ) : !isLoading && history.length ? (
           history.map((item, index) => (
             <div
               key={index}
@@ -202,10 +208,16 @@ export default function SearchResult({ search, setSongId }) {
             </div>
           ))
         ) : (
-          <div className="h-full flex items-center justify-center text-[20px] text-gray-500">
-            No Results Found
-          </div>
+          <></>
         )}
+        {isLoading && <SearchSkeleton />}
+        {!isLoading &&
+          ((results.length === 0 && search.length !== 0) ||
+            (search.length === 0 && !history.length)) && (
+            <div className="h-full flex items-center justify-center text-[20px] text-gray-500">
+              No Results Found
+            </div>
+          )}
       </div>
     </div>
   );

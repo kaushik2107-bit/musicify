@@ -25,6 +25,8 @@ import {
   limit,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import TrendingSkeleton from "../../Skeletons/TrendingSkeleton";
+import TrendingText from "../../Skeletons/TrendingText";
 
 const saira = Saira({ subsets: ["latin"] });
 
@@ -40,12 +42,14 @@ export default function TrendingMusic({
 }) {
   const [user, loading, error] = useAuthState(auth);
   const [cardsData, setCardsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const db = getFirestore();
   const colRef = collection(db, "userInfo");
   const songRef = collection(db, "songs");
   const albumRef = collection(db, "album");
 
   const fetchTrending = async () => {
+    setIsLoading(true);
     const q = query(songRef, orderBy("streams", "desc"), limit(5));
     const data = await getDocs(q);
     let ans = [];
@@ -53,6 +57,7 @@ export default function TrendingMusic({
       ans.push({ id: element.id, ...element.data() });
     });
     setCardsData((prev) => [...ans]);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -73,25 +78,34 @@ export default function TrendingMusic({
   };
 
   return (
-    <div className={saira.className} style={{ position: "relative" }}>
-      <Slider {...settings} className="absolute w-full">
-        {cardsData
-          .map((item, index) => (
-            <Card
-              key={index}
-              data={item}
-              setSongId={setSongId}
-              songId={songId}
-              setQueue={setQueue}
-              setIndex={setIndex}
-              currentSongId={currentSongId}
-              setCurrentSongId={setCurrentSongId}
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-            />
-          ))
-          .reverse()}
-      </Slider>
-    </div>
+    <>
+      <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
+        {!isLoading ? "Trending Music" : <TrendingText />}
+      </h4>
+      <div className={saira.className} style={{ position: "relative" }}>
+        {!isLoading ? (
+          <Slider {...settings} className="absolute w-full">
+            {cardsData
+              .map((item, index) => (
+                <Card
+                  key={index}
+                  data={item}
+                  setSongId={setSongId}
+                  songId={songId}
+                  setQueue={setQueue}
+                  setIndex={setIndex}
+                  currentSongId={currentSongId}
+                  setCurrentSongId={setCurrentSongId}
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                />
+              ))
+              .reverse()}
+          </Slider>
+        ) : (
+          <TrendingSkeleton />
+        )}
+      </div>
+    </>
   );
 }

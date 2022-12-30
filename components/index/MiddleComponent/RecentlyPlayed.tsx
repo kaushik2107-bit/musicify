@@ -23,11 +23,14 @@ import {
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
+import RecentlyPlayedSkeleton from "../../Skeletons/RecentlyPlayedSkeleton";
+import TrendingText from "../../Skeletons/TrendingText";
 
 export default function RecentlyPlayed({ setSongId }) {
   const [user, loading, error] = useAuthState(auth);
   const [tiles, setTiles] = useState([]);
   const [songs, setSongs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const db = getFirestore();
   const colRef = collection(db, "userInfo");
@@ -35,6 +38,7 @@ export default function RecentlyPlayed({ setSongId }) {
   const albumRef = collection(db, "album");
 
   const fetchRecentlyPlayed = async () => {
+    setIsLoading(true);
     const docRef = doc(colRef, user.uid);
     const snap = await getDoc(docRef);
     const obj = snap.data().recentlyPlayed;
@@ -57,6 +61,7 @@ export default function RecentlyPlayed({ setSongId }) {
         ans.push({ id: element.id, ...element.data() });
       });
       setSongs(ans);
+      setIsLoading(false);
     }
   };
 
@@ -65,37 +70,41 @@ export default function RecentlyPlayed({ setSongId }) {
   }, []);
 
   useEffect(() => {
-    fetchSongsData();
+    if (tiles.length) fetchSongsData();
   }, [tiles]);
 
   return (
     <div className={saira.className}>
       <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
-        Recently Played
+        {!isLoading ? "Recently Played" : <TrendingText />}
       </h4>
       <div className="flex flex-wrap gap-2 h-[230px] overflow-hidden">
-        {songs.map((item, index) => (
-          <div
-            key={index}
-            className="w-[170px] h-[220px] hover:bg-[#1d242c] rounded-xl flex flex-col p-2 cursor-pointer"
-            onClick={() => setSongId((prev) => item)}
-          >
-            <Image
-              loader={() => item.imageURL}
-              src={item.imageURL}
-              width={170}
-              height={220}
-              alt={"image"}
-              className="rounded-md"
-            />
-            <p className="truncate text-[18px] px-[2px] text-[#eee] font-medium">
-              {item.songName || item.albumName}
-            </p>
-            <p className="text-[14px] px-[2px] text-[#999]">
-              {item.artistName}
-            </p>
-          </div>
-        ))}
+        {!isLoading ? (
+          songs.map((item, index) => (
+            <div
+              key={index}
+              className="w-[170px] h-[220px] hover:bg-[#1d242c] rounded-xl flex flex-col p-2 cursor-pointer"
+              onClick={() => setSongId((prev) => item)}
+            >
+              <Image
+                loader={() => item.imageURL}
+                src={item.imageURL}
+                width={170}
+                height={220}
+                alt={"image"}
+                className="rounded-md"
+              />
+              <p className="truncate text-[18px] px-[2px] text-[#eee] font-medium">
+                {item.songName || item.albumName}
+              </p>
+              <p className="text-[14px] px-[2px] text-[#999]">
+                {item.artistName}
+              </p>
+            </div>
+          ))
+        ) : (
+          <RecentlyPlayedSkeleton />
+        )}
       </div>
     </div>
   );
