@@ -73,9 +73,9 @@ export default function Recents({ setSongId }) {
 
   return (
     <div className={saira.className} style={{ overflow: "scroll" }}>
-      <p className="text-[18px] uppercase font-medium text-[#eee] p-4">
+      <div className="text-[18px] uppercase font-medium text-[#eee] p-4">
         {!isLoading ? "Liked Songs" : <TrendingText />}
-      </p>
+      </div>
       <div className="flex flex-wrap gap-2 p-4 items-center">
         {!isLoading ? (
           songs.map((item, index) => (

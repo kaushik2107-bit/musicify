@@ -20,6 +20,8 @@ import Recents from "../components/index/MiddleComponent/Recents";
 import Favorites from "../components/index/MiddleComponent/Favorites";
 import Trendings from "../components/index/MiddleComponent/Trendings";
 import Plan from "../components/index/RightComponent/Plan";
+import AddPlaylist from "../components/index/MiddleComponent/AddPlaylist";
+import Playlists from "../components/index/MiddleComponent/Playlists";
 
 export default function Home() {
   const router = useRouter();
@@ -102,9 +104,19 @@ function HomeComponent() {
                   <Recents setSongId={setSongId} />
                 </div>
               ),
+              6: (
+                <div className="flex flex-col h-screen">
+                  <Playlists setSongId={setSongId} />
+                </div>
+              ),
               7: (
                 <div className="flex flex-col h-screen">
                   <Favorites setSongId={setSongId} />
+                </div>
+              ),
+              8: (
+                <div className="flex flex-col h-screen">
+                  <AddPlaylist setActive={setActive} />
                 </div>
               ),
             }[active]
