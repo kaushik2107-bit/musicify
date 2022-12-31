@@ -22,6 +22,7 @@ import Trendings from "../components/index/MiddleComponent/Trendings";
 import Plan from "../components/index/RightComponent/Plan";
 import AddPlaylist from "../components/index/MiddleComponent/AddPlaylist";
 import Playlists from "../components/index/MiddleComponent/Playlists";
+import AccountDetails from "../components/index/MiddleComponent/Account";
 
 export default function Home() {
   const router = useRouter();
@@ -116,7 +117,12 @@ function HomeComponent() {
               ),
               8: (
                 <div className="flex flex-col h-screen">
-                  <AddPlaylist setActive={setActive} />
+                  <AddPlaylist />
+                </div>
+              ),
+              9: (
+                <div className="flex flex-col h-screen">
+                  <AccountDetails />
                 </div>
               ),
             }[active]
@@ -138,7 +144,7 @@ function HomeComponent() {
 
         {/* Right Section of the page */}
         <div className="h-full w-[350px] bg-[#1d242c] flex flex-col">
-          <Account />
+          <Account setActive={setActive} />
           <Plan />
           <AudioPlayer
             isPlaying={isPlaying}
