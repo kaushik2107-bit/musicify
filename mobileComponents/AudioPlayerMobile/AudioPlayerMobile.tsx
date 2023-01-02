@@ -239,8 +239,9 @@ export default function AudioPlayerMobile({
                   <div className="flex-1 flex flex-col items-center justify-center p-2">
                     <Image
                       className="bg-center bg-cover rounded-full"
-                      width={300}
-                      height={300}
+                      width={150}
+                      height={150}
+                      sizes="100px"
                       loader={() => queue[currentIndex].imageURL}
                       src={queue[currentIndex].imageURL}
                       alt={"songImage"}
@@ -266,7 +267,7 @@ export default function AudioPlayerMobile({
                           track: {
                             backgroundColor: "#555",
                             height: "5px",
-                            width: "300px",
+                            width: "250px",
                           },
                           active: {
                             backgroundColor: "white",
