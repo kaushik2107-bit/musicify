@@ -26,8 +26,9 @@ import Image from "next/image";
 import TileSkeleton from "../../Skeletons/TileSkeleton";
 import TrendingText from "../../Skeletons/TrendingText";
 import ImageSkeleton from "../../Skeletons/ImageSkeleton";
+import { BiArrowBack } from "react-icons/bi";
 
-export default function Account() {
+export default function Account({ setActive }) {
   const [user, loading, error] = useAuthState(auth);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +55,7 @@ export default function Account() {
 
   return (
     <div className={saira.className} style={{ overflow: "scroll" }}>
-      <div className="text-[18px] uppercase font-medium text-[#eee] p-4">
+      <div className="max-lg:text-center max-lg:p-8 text-[18px] uppercase font-medium text-[#eee] p-4">
         {!isLoading ? "Account Details" : <TrendingText />}
       </div>
       <div className="flex flex-col items-center">

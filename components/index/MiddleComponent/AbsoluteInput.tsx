@@ -13,7 +13,7 @@ const AbsoluteInput = ({ setIsVisible, setPlaylistName, playlistName }) => {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#111] rounded-xl w-[500px] h-[150px]"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#111] rounded-xl w-[500px] h-[150px] max-lg:w-[95%]"
       >
         <div className="w-full h-[60px] flex items-center p-2 px-4 justify-between">
           <p className="text-white">Playlist Name</p>

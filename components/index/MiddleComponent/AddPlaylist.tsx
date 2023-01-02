@@ -114,7 +114,7 @@ export default function AddPlaylist({ setActive }) {
         <p className="text-[18px] uppercase font-medium text-[#eee] p-4">
           Add Playlist
         </p>
-        <div className="flex gap-2 p-2 px-4">
+        <div className="flex max-lg:flex-col max-lg:items-center gap-2 p-2 px-4">
           {playlistSongs.length >= 4 ? (
             <div className="w-[250px] h-[250px]">
               <Image
@@ -168,7 +168,7 @@ export default function AddPlaylist({ setActive }) {
               IMAGE
             </div>
           )}
-          <div className="flex-1 flex items-center">
+          <div className="flex-1 max-lg:w-full max-lg:mb-2 flex items-center">
             <div className="flex flex-1 h-fit border-b-2 items-center border-gray-500">
               <div className="flex-1 text-white text-[30px] px-[4px] break-all font-medium">
                 {playlistName}

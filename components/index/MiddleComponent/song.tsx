@@ -210,7 +210,7 @@ export default function Song({
           <BiArrowBack className="text-[20px] text-gray-300" />
         </button>
         <div className="">
-          <div className="h-[300px] pt-10 w-full flex items-center px-8 gap-2">
+          <div className="h-[300px] max-lg:h-[350px] pt-10 w-full max-lg:flex-col flex items-center px-8 gap-2">
             {!songId.playlistName ? (
               <Image
                 loader={() => songId.imageURL}
@@ -272,7 +272,7 @@ export default function Song({
                 IMAGE
               </div>
             )}
-            <div className="flex-[1_1_0] min-w-0">
+            <div className="flex-[1_1_0] min-w-0 max-lg:text-center max-lg:w-[95%]">
               <p className="truncate text-ellipsis text-[40px] text-white font-bold">
                 {songId.songName || songId.albumName || songId.playlistName}
               </p>

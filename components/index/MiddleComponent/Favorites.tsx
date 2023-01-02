@@ -81,7 +81,7 @@ export default function Recents({ setSongId }) {
           songs.map((item, index) => (
             <div
               key={index}
-              className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
+              className="lg:min-w-[500px] max-lg:min-w-[100%] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
               onClick={() => setSongId((prev) => item)}
             >
               <Image
@@ -89,6 +89,7 @@ export default function Recents({ setSongId }) {
                 src={item.imageURL}
                 width={120}
                 height={120}
+                className="max-lg:w-[80px] max-lg:h-[80px]"
                 alt={"image"}
               />
               <div className="text-[#ddd]">

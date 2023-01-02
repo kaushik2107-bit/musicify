@@ -24,6 +24,14 @@ import AddPlaylist from "../components/index/MiddleComponent/AddPlaylist";
 import Playlists from "../components/index/MiddleComponent/Playlists";
 import AccountDetails from "../components/index/MiddleComponent/Account";
 
+// Mobile components
+import BottomMenu from "../mobileComponents/BottomMenu/BottomMenu";
+import TopHeader from "../mobileComponents/TopHeader/TopHeader";
+import LibraryMobile from "../mobileComponents/Library/Library";
+import RecentlyPlayedMobile from "../mobileComponents/RecentlyPlayed/RecentlyPlayed";
+import AudioPlayerMobile from "../mobileComponents/AudioPlayerMobile/AudioPlayerMobile";
+import AudioPlayerMobileMini from "../mobileComponents/AudioPlayerMobile/AudioPlayerMobileMini";
+
 export default function Home() {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
@@ -44,6 +52,7 @@ function HomeComponent() {
   const [index, setIndex] = useState(null);
   const [currentSongId, setCurrentSongId] = useState(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [maxAudioPlayer, setMaxAudioPlayer] = useState<boolean>(false);
   return (
     <>
       <Head>
@@ -52,11 +61,11 @@ function HomeComponent() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/Vector-logo.png" />
       </Head>
-      <main className="w-screen h-screen bg-gray-900 flex flex-row">
+      <main className="max-lg:hidden w-screen h-screen bg-gray-900 flex flex-row overflow-hidden">
         {/* Left Section of the page */}
-        <div className="h-full w-[250px] bg-[#1d242c] flex flex-col">
+        <div className="h-full lg:w-[250px] lg:visible collapse bg-[#1d242c] flex flex-col">
           <Logo active={active} setActive={setActive} />
-          <div className="overflow-scroll scrollbar-hidden">
+          <div className="overflow-scroll">
             <Menu active={active} setActive={setActive} />
             <Library active={active} setActive={setActive} />
             <Customize active={active} setActive={setActive} />
@@ -107,7 +116,7 @@ function HomeComponent() {
               ),
               6: (
                 <div className="flex flex-col h-screen">
-                  <Playlists setSongId={setSongId} />
+                  <Playlists setSongId={setSongId} setActive={setActive} />
                 </div>
               ),
               7: (
@@ -143,7 +152,7 @@ function HomeComponent() {
         </div>
 
         {/* Right Section of the page */}
-        <div className="h-full w-[350px] bg-[#1d242c] flex flex-col">
+        <div className="h-full xl:w-[350px] xl:visible collapse bg-[#1d242c] flex flex-col">
           <Account setActive={setActive} />
           <Plan />
           <AudioPlayer
@@ -155,6 +164,96 @@ function HomeComponent() {
             currentSongId={currentSongId}
             setCurrentSongId={setCurrentSongId}
           />
+        </div>
+      </main>
+      <main className="max-lg:visible lg:hidden w-screen h-screen bg-[#1c1c1c]">
+        <div className="w-screen h-screen flex flex-col">
+          {/* Content Header */}
+          <div className="flex-1">
+            {!songId ? (
+              {
+                1: (
+                  <div className="flex flex-col h-screen">
+                    <div className=" h-[100px]">
+                      <TopHeader setActive={setActive} active={active} />
+                    </div>
+                    <div className="px-4">
+                      <RecentlyPlayedMobile setSongId={setSongId} />
+                    </div>
+                  </div>
+                ),
+                4: (
+                  <div className="flex flex-col h-screen">
+                    <SearchBar search={search} setSearch={setSearch} />
+                    <SearchResult search={search} setSongId={setSongId} />
+                  </div>
+                ),
+                5: (
+                  <div className="flex flex-col h-screen">
+                    <Recents setSongId={setSongId} />
+                  </div>
+                ),
+                6: (
+                  <div className="flex flex-col h-screen">
+                    <LibraryMobile
+                      setSongId={setSongId}
+                      active={active}
+                      setActive={setActive}
+                    />
+                  </div>
+                ),
+                7: (
+                  <div className="flex flex-col h-screen">
+                    <LibraryMobile
+                      setSongId={setSongId}
+                      active={active}
+                      setActive={setActive}
+                    />
+                  </div>
+                ),
+                8: (
+                  <div className="flex flex-col h-screen">
+                    <AddPlaylist />
+                  </div>
+                ),
+                9: (
+                  <div className="flex flex-col h-screen">
+                    <AccountDetails setActive={setActive} />
+                  </div>
+                ),
+              }[active]
+            ) : (
+              <div className="">
+                <Song
+                  setSongId={setSongId}
+                  songId={songId}
+                  setQueue={setQueue}
+                  setIndex={setIndex}
+                  currentSongId={currentSongId}
+                  setCurrentSongId={setCurrentSongId}
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                />
+              </div>
+            )}
+          </div>
+
+          <AudioPlayerMobile
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            queue={queue}
+            currentIndex={index}
+            setCurrentIndex={setIndex}
+            currentSongId={currentSongId}
+            setCurrentSongId={setCurrentSongId}
+            setMaxAudioPlayer={setMaxAudioPlayer}
+            maxAudioPlayer={maxAudioPlayer}
+          />
+
+          {/* Menu Header */}
+          <div className="absolute w-full bottom-0 bg-[#222222] h-[80px]">
+            <BottomMenu active={active} setActive={setActive} />
+          </div>
         </div>
       </main>
     </>

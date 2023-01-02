@@ -26,7 +26,7 @@ import Image from "next/image";
 import TileSkeleton from "../../Skeletons/TileSkeleton";
 import TrendingText from "../../Skeletons/TrendingText";
 
-export default function Playlists({ setSongId }) {
+export default function Playlists({ setSongId, setActive }) {
   const [user, loading, error] = useAuthState(auth);
   const [tiles, setTiles] = useState([]);
   const [songs, setSongs] = useState([]);
@@ -76,34 +76,40 @@ export default function Playlists({ setSongId }) {
 
   return (
     <div className={saira.className} style={{ overflow: "scroll" }}>
-      <div className="text-[18px] uppercase font-medium text-[#eee] p-4">
-        {!isLoading ? "Playlists" : <TrendingText />}
+      <div className="text-[18px] uppercase font-medium text-[#eee] p-4 flex justify-between">
+        <div className="">Playlists</div>
+        <div
+          className="text-[#777] cursor-pointer"
+          onClick={() => setActive(8)}
+        >
+          New Playlist
+        </div>
       </div>
       <div className="flex flex-wrap gap-2 p-4 items-center">
         {!isLoading ? (
           songs.map((item, index) => (
             <div
               key={index}
-              className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
+              className="lg:min-w-[500px] max-lg:min-w-[100%] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
               onClick={() => setSongId((prev) => item)}
             >
               {item.songsArray.length >= 4 ? (
-                <div className="w-[150px] h-[150px]">
+                <div className="w-[150px] h-[150px] max-lg:w-[80px] max-lg:h-[80px]">
                   <Image
                     width={150}
                     height={150}
+                    className="max-lg:w-[80px] max-lg:h-[80px] absolute"
                     loader={() => item.imageURL[0]}
                     src={item.imageURL[0]}
-                    className="absolute"
                     style={{ clipPath: `polygon(0 0, 91% 0, 0 65%)` }}
                     alt={"image"}
                   />
                   <Image
                     width={150}
                     height={150}
+                    className="max-lg:w-[80px] max-lg:h-[80px] absolute"
                     loader={() => item.imageURL[1]}
                     src={item.imageURL[1]}
-                    className="absolute"
                     style={{
                       clipPath: `polygon(0 68%, 52% 30%, 61% 100%, 0% 100%)`,
                     }}
@@ -112,9 +118,9 @@ export default function Playlists({ setSongId }) {
                   <Image
                     width={150}
                     height={150}
+                    className="max-lg:w-[80px] max-lg:h-[80px] absolute"
                     loader={() => item.imageURL[2]}
                     src={item.imageURL[2]}
-                    className="absolute"
                     style={{
                       clipPath: `polygon(100% 59%, 54% 30%, 63% 100%, 100% 100%)`,
                     }}
@@ -123,9 +129,9 @@ export default function Playlists({ setSongId }) {
                   <Image
                     width={150}
                     height={150}
+                    className="max-lg:w-[80px] max-lg:h-[80px] absolute"
                     loader={() => item.imageURL[3]}
                     src={item.imageURL[3]}
-                    className="absolute"
                     style={{
                       clipPath: `polygon(100% 57%, 55% 28%, 94% 0, 100% 0)`,
                     }}
@@ -136,12 +142,13 @@ export default function Playlists({ setSongId }) {
                 <Image
                   width={150}
                   height={150}
+                  className="max-lg:w-[80px] max-lg:h-[80px]"
                   loader={() => item.imageURL[0]}
                   src={item.imageURL[0]}
                   alt={"image"}
                 />
               ) : (
-                <div className="w-[150px] h-[150px] bg-gray-700 text-gray-500 flex items-center justify-center text-[25px]">
+                <div className="w-[150px] h-[150px] max-lg:w-[80px] max-lg:h-[80px] bg-gray-700 text-gray-500 flex items-center justify-center text-[25px]">
                   IMAGE
                 </div>
               )}

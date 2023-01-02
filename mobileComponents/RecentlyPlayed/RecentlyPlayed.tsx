@@ -1,4 +1,7 @@
-import { auth, app } from "../../../lib/firebase";
+import { Saira } from "@next/font/google";
+import Image from "next/image";
+const saira = Saira({ subsets: ["latin"] });
+import { auth, app } from "../../lib/firebase";
 import {
   getFirestore,
   collection,
@@ -20,13 +23,10 @@ import {
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
-import { Saira } from "@next/font/google";
-const saira = Saira({ subsets: ["latin"] });
-import Image from "next/image";
-import TileSkeleton from "../../Skeletons/TileSkeleton";
-import TrendingText from "../../Skeletons/TrendingText";
+import RecentlyPlayedSkeleton from "../../components/Skeletons/RecentlyPlayedSkeleton";
+import TrendingText from "../../components/Skeletons/TrendingText";
 
-export default function Recents({ setSongId }) {
+export default function RecentlyPlayed({ setSongId }) {
   const [user, loading, error] = useAuthState(auth);
   const [tiles, setTiles] = useState([]);
   const [songs, setSongs] = useState([]);
@@ -70,43 +70,50 @@ export default function Recents({ setSongId }) {
   }, []);
 
   useEffect(() => {
-    fetchSongsData();
+    if (tiles.length) fetchSongsData();
   }, [tiles]);
 
   return (
-    <div className={saira.className} style={{ overflow: "scroll" }}>
-      <div className="text-[18px] uppercase font-medium text-[#eee] p-4 max-lg:text-[20px] max-lg:text-center max-lg:py-8">
+    <div className={saira.className}>
+      <h4 className="my-4 text-[20px] text-[#aaa] font-medium uppercase">
         {!isLoading ? "Recently Played" : <TrendingText />}
-      </div>
-      <div className="flex flex-wrap gap-2 p-4 items-center">
+      </h4>
+      <div
+        className="flex w-full overflow-scroll gap-2 h-[240px] flex-nowrap"
+        style={{
+          "&::WebkitScrollbar": { width: 0, height: 0, display: "none" },
+          scrollbarWidth: "none",
+        }}
+      >
         {!isLoading ? (
           songs.map((item, index) => (
             <div
               key={index}
-              className="lg:min-w-[500px] max-lg:min-w-[100%] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
+              className="w-[180px] h-[240px] hover:bg-[#1d242c] rounded-xl p-2 cursor-pointer"
               onClick={() => setSongId((prev) => item)}
             >
-              <Image
-                loader={() => item.imageURL}
-                src={item.imageURL}
-                width={120}
-                height={120}
-                className="lg:w-[120px] lg:h-[120px] max-lg:w-[80px] max-lg:w-[80px]"
-                alt={"image"}
-              />
-              <div className="text-[#ddd]">
-                <p className="text-[20px]">{item.songName || item.albumName}</p>
-                <div className="flex gap-2 items-center">
-                  <p className="text-[14px] text-[#aaa]">{item.artistName}</p>
-                  <p className="text-[12px] text-[#888]">
-                    {item.songsArray?.length ? "Album" : "Song"}
-                  </p>
+              <div className="w-[170px] h-[170px]">
+                <Image
+                  loader={() => item.imageURL}
+                  src={item.imageURL}
+                  width={170}
+                  height={170}
+                  alt={"image"}
+                  className="rounded-md"
+                />
+              </div>
+              <div className="w-[170px] h-[60px]">
+                <div className="truncate text-[18px] px-[2px] text-[#eee] font-medium">
+                  {item.songName || item.albumName}
                 </div>
+                <p className="text-[14px] px-[2px] text-[#999]">
+                  {item.artistName}
+                </p>
               </div>
             </div>
           ))
         ) : (
-          <TileSkeleton />
+          <RecentlyPlayedSkeleton />
         )}
       </div>
     </div>
