@@ -342,7 +342,7 @@ export default function AudioPlayerMobile({
           </AnimatePresence>
         ) : (
           <motion.div className={saira.className}>
-            <div className="absolute w-[95%] rounded-xl left-1/2 transform -translate-x-1/2 bottom-[100px] bg-[#333] h-[80px]">
+            <div className="fixed w-[95%] rounded-xl left-1/2 transform -translate-x-1/2 bottom-[100px] bg-[#333] h-[80px]">
               <div
                 className="w-full h-full flex flex-row cursor-pointer"
                 onClick={() => setMaxAudioPlayer(true)}
