@@ -173,7 +173,7 @@ function HomeComponent() {
             {!songId ? (
               {
                 1: (
-                  <div className="flex flex-col h-screen">
+                  <div className="flex flex-col h-screen overflow-scroll">
                     <div className=" h-[100px]">
                       <TopHeader setActive={setActive} active={active} />
                     </div>
@@ -183,7 +183,7 @@ function HomeComponent() {
                   </div>
                 ),
                 4: (
-                  <div className="flex flex-col h-screen">
+                  <div className="flex flex-col h-screen overflow-scroll">
                     <SearchBar search={search} setSearch={setSearch} />
                     <SearchResult search={search} setSongId={setSongId} />
                   </div>
@@ -251,7 +251,7 @@ function HomeComponent() {
           />
 
           {/* Menu Header */}
-          <div className="absolute w-full bottom-0 bg-[#222222] h-[80px]">
+          <div className="fixed w-full bottom-0 bg-[#222222] h-[80px]">
             <BottomMenu active={active} setActive={setActive} />
           </div>
         </div>
