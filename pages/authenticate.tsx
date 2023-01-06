@@ -25,6 +25,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import { TiTick } from "react-icons/ti";
 
 export default function Authenticate() {
   const router = useRouter();
@@ -87,11 +88,35 @@ function AuthenticateComponent() {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8)), url(/loginImages/image.jpg)`,
         }}
       >
-        <div className="px-20 py-5 flex items-center">
-          <p className="text-white text-[50px]">Welcome to</p>
+        <div className="absolute top-0 left-0 transform left-1/2 -translate-x-1/2">
           <Logo />
         </div>
-        <GoogleButton onClick={login} />
+        <div className="w-screen flex max-md:flex-col-reverse max-md:items-center">
+          <div className="w-[40%] flex flex-col justify-center items-center">
+            <p className="text-[#aaa] text-center">Join Now</p>
+            <div className="p-4">
+              <GoogleButton onClick={login} />
+            </div>
+          </div>
+          <div className="flex-1 border-l-2 border-[#666] px-6 py-8 max-md:border-none max-md:hidden">
+            <p className="text-blue-500 font-medium text-[45px]">
+              Get the right music, right now
+            </p>
+            <p className="text-[#999] text-[16px]">
+              Listen to million of songs for free
+            </p>
+            <ul className="text-[#bbb] py-4 text-[14px]">
+              <li className="flex items-center">
+                <TiTick className="text-blue-500 text-[20px]" />
+                Search & discover music you'll love
+              </li>
+              <li className="flex items-center">
+                <TiTick className="text-blue-500 text-[20px]" />
+                Create playlists of your favorite music
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
