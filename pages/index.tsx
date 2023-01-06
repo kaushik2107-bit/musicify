@@ -6,6 +6,7 @@ import Customize from "../components/index/LeftComponent/Customize";
 import Logout from "../components/index/LeftComponent/Logout";
 import TrendingMusic from "../components/index/MiddleComponent/TrendingMusic";
 import RecentlyPlayed from "../components/index/MiddleComponent/RecentlyPlayed";
+import FavoriteHome from "../components/index/MiddleComponent/FavoriteHome";
 import Account from "../components/index/RightComponent/Account";
 import SearchBar from "../components/index/MiddleComponent/SearchBar";
 import SearchResult from "../components/index/MiddleComponent/SearchResult";
@@ -93,6 +94,9 @@ function HomeComponent() {
                     <div className="flex flex-col mt-[250px]">
                       <div className="h-[290px]">
                         <RecentlyPlayed setSongId={setSongId} />
+                      </div>
+                      <div className="h-[290px]">
+                        <FavoriteHome setSongId={setSongId} />
                       </div>
                     </div>
                   </div>
