@@ -152,7 +152,7 @@ function HomeComponent() {
         </div>
 
         {/* Right Section of the page */}
-        <div className="h-full xl:w-[350px] xl:visible collapse bg-[#1d242c] flex flex-col">
+        <div className="h-full w-[350px] bg-[#1d242c] flex flex-col">
           <Account setActive={setActive} />
           <Plan />
           <AudioPlayer
@@ -167,8 +167,10 @@ function HomeComponent() {
         </div>
       </main>
       <main className="max-lg:visible lg:hidden w-screen h-screen bg-[#1c1c1c]">
-        <div className="w-screen h-screen flex flex-col">
-          {/* Content Header */}
+        <div className="w-screen h-screen flex justify-center items-center text-white">
+          Mobile Device Not Compatible
+        </div>
+        {/*<div className="w-screen h-screen flex flex-col">
           <div className="flex-1">
             {!songId ? (
               {
@@ -250,11 +252,11 @@ function HomeComponent() {
             maxAudioPlayer={maxAudioPlayer}
           />
 
-          {/* Menu Header */}
+
           <div className="fixed w-full bottom-0 bg-[#222222] h-[80px]">
             <BottomMenu active={active} setActive={setActive} />
           </div>
-        </div>
+        </div>*/}
       </main>
     </>
   );
