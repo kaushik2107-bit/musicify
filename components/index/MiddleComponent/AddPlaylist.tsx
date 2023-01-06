@@ -208,7 +208,7 @@ export default function AddPlaylist({ setActive }) {
             Add songs
           </div>
         </div>
-        <div className="pt-2 flex-1 overflow-scroll">
+        <div className="pt-2 flex-1 overflow-scroll scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
           {playlistSongs.map((item, index) => (
             <div
               className="flex p-2 px-4 items-center hover:bg-gray-800"

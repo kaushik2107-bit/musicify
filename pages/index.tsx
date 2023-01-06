@@ -66,7 +66,7 @@ function HomeComponent() {
         {/* Left Section of the page */}
         <div className="h-full lg:w-[250px] lg:visible collapse bg-[#1d242c] flex flex-col">
           <Logo active={active} setActive={setActive} />
-          <div className="overflow-scroll">
+          <div className="overflow-scroll scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
             <Menu active={active} setActive={setActive} />
             <Library active={active} setActive={setActive} />
             <Customize active={active} setActive={setActive} />
@@ -79,7 +79,7 @@ function HomeComponent() {
           {!songId ? (
             {
               1: (
-                <div className="flex flex-col h-screen overflow-scroll">
+                <div className="flex flex-col h-screen overflow-scroll scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
                   <div className="h-screen mx-8">
                     <TrendingMusic
                       setSongId={setSongId}

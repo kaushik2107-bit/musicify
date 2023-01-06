@@ -202,7 +202,7 @@ export default function Song({
   const router = useRouter();
   return (
     <div className={saira.className}>
-      <div className="h-screen overflow-scroll">
+      <div className="h-screen overflow-scroll scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
         <button
           className="m-2 mx-4 absolute p-3 px-4 z-10 rounded-full bg-gray-700 "
           onClick={() => setSongId((prev) => null)}

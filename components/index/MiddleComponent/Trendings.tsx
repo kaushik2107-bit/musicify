@@ -53,39 +53,46 @@ export default function Trendings({ setSongId }) {
   }, []);
 
   return (
-    <div className={saira.className} style={{ overflow: "scroll" }}>
-      <div className="text-[18px] uppercase font-medium text-[#eee] p-4">
-        {!isLoading ? "Trending Songs" : <TrendingText />}
-      </div>
-      <div className="flex flex-wrap gap-2 p-4 items-center">
-        {!isLoading ? (
-          songs.map((item, index) => (
-            <div
-              key={index}
-              className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
-              onClick={() => setSongId((prev) => item)}
-            >
-              <Image
-                loader={() => item.imageURL}
-                src={item.imageURL}
-                width={120}
-                height={120}
-                alt={"image"}
-              />
-              <div className="text-[#ddd]">
-                <p className="text-[20px]">{item.songName || item.albumName}</p>
-                <div className="flex gap-2 items-center">
-                  <p className="text-[14px] text-[#aaa]">{item.artistName}</p>
-                  <p className="text-[12px] text-[#888]">
-                    {item.songsArray?.length ? "Album" : "Song"}
+    <div
+      className="scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]"
+      style={{ overflow: "scroll" }}
+    >
+      <div className={saira.className}>
+        <div className="text-[18px] uppercase font-medium text-[#eee] p-4">
+          {!isLoading ? "Trending Songs" : <TrendingText />}
+        </div>
+        <div className="flex flex-wrap gap-2 p-4 items-center">
+          {!isLoading ? (
+            songs.map((item, index) => (
+              <div
+                key={index}
+                className="min-w-[500px] h-fit flex-1 p-2 flex items-center gap-4 hover:bg-gray-800 cursor-pointer"
+                onClick={() => setSongId((prev) => item)}
+              >
+                <Image
+                  loader={() => item.imageURL}
+                  src={item.imageURL}
+                  width={120}
+                  height={120}
+                  alt={"image"}
+                />
+                <div className="text-[#ddd]">
+                  <p className="text-[20px]">
+                    {item.songName || item.albumName}
                   </p>
+                  <div className="flex gap-2 items-center">
+                    <p className="text-[14px] text-[#aaa]">{item.artistName}</p>
+                    <p className="text-[12px] text-[#888]">
+                      {item.songsArray?.length ? "Album" : "Song"}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <TileSkeleton />
-        )}
+            ))
+          ) : (
+            <TileSkeleton />
+          )}
+        </div>
       </div>
     </div>
   );

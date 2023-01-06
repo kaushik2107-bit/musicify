@@ -83,7 +83,7 @@ const AbsoluteInput = ({ setIsSongModal, setPlaylistSongs, playlistSongs }) => {
             className="bg-transparent text-white outline-none border-b-2 focus:border-blue-500 transition delay-50 border-gray-300 w-full placeholder:text-gray-600 p-[4px]"
           />
         </div>
-        <div className="flex-1 overflow-scroll">
+        <div className="flex-1 overflow-scroll scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
           {isLoading && <SearchSkeleton />}
           {!isLoading && results.length !== 0 && (
             <>

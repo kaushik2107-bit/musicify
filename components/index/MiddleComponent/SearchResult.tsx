@@ -146,7 +146,7 @@ export default function SearchResult({ search, setSongId }) {
           </div>
         )
       )}
-      <div className="flex-[1_1_0] p-4 overflow-scroll flex flex-col gap-2">
+      <div className="flex-[1_1_0] p-4 overflow-scroll flex flex-col gap-2 scrollbar scrollbar-thumb-gray-600 scrollbar-thin scrollbar-track-gray-400 scrollbar-w-[5px]">
         {!isLoading && search.length ? (
           results.map((item, index) => (
             <div
